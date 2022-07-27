@@ -21,7 +21,7 @@ if (cond) {
     %x2 = 3 // stack: x2   ; register: rax=>3
     %y0 = 4 // stack: x2,y0; register: rax=>3,rbx=>4
 }
-%x0 = phi(%x1, %x2) // stack: ?, register: rax=>3,rbx=>4
+%x0 = phi(%x1, %x2) // stack: ??, register: rax=>3,rbx=>4
 ```
 
 ### Solution: functional-style SSA
@@ -33,14 +33,14 @@ x = 1
 y = 2
 z = 3
 if (cond) [x, y, z] {
-    // stack: x, y, z
+    // stack: 1, 2, 3
     x1 = y // stack: 2
-    JOIN(x1) // jump to the join point, with x on the stack
+    JOIN(x1) // jump to the join point, with x1 on the stack
 } else {
     x1 = z // stack: 3
     t = 1 // can be eliminated because it dies before JOIN
 
-    JOIN(x1) // jump to the join point, with x on the stack
+    JOIN(x1) // jump to the join point, with x1 on the stack
 }
 ```
 
