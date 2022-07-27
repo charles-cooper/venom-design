@@ -21,7 +21,7 @@ if (cond) {
     %x2 = 3 // stack: x2   ; register: rax=>3
     %y0 = 4 // stack: x2,y0; register: rax=>3,rbx=>4
 }
-%x0 = phi(%x1, %x2) // stack: ??, register: rax=>3,rbx=>4
+%x3 = phi(%x1, %x2) // stack: ??, register: rax=>3,rbx=>4
 ```
 
 ### Solution: functional-style SSA
@@ -32,7 +32,7 @@ Instead of using phi-instructions to represent layout coalescing at join points,
 x = 1
 y = 2
 z = 3
-if (cond) [x, y, z] {
+x3 = if (cond) [x, y, z] {
     // stack: 1, 2, 3
     x1 = y // stack: 2
     JOIN(x1) // jump to the join point, with x1 on the stack
